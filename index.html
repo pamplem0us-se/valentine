@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Will you be my Valentine?</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #ffe6f0;
+  overflow-x: hidden;
+}
+
+/* Page layout */
+.page {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+.active { display: flex; }
+
+h1 { color: #ff4fa3; }
+
+img {
+  width: 220px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  height: 90px; /* prevents jumping */
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 18px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s ease, all 0.3s ease;
+}
+
+#yesBtn {
+  background: #ff69b4;
+  color: white;
+}
+
+#noBtn {
+  background: #ffd1e8;
+}
+
+/* Book */
+.book {
+  width: 340px;
+  height: 440px;
+  perspective: 2000px;
+  margin-top: 10px;
+}
+
+.book-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  cursor: pointer;
+}
+
+.book.open .book-inner {
+  transform: rotateY(-180deg);
+}
+
+.cover, .pages {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.cover {
+  background: #ffc2e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+}
+
+.pages {
+  background: white;
+  transform: rotateY(180deg);
+  padding: 20px;
+  overflow-y: auto;
+  text-align: left;
+  line-height: 1.7;
+}
+
+.letter-photo {
+  width: 100%;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.small-note {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.webm" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <img src="https://media1.tenor.com/m/7VT-jcFlwukAAAAd/ranpo-edogawa.gif">
+  <h1>Will you be my Valentine? 💗</h1>
+
+  <div class="buttons" id="btnContainer">
+    <button id="yesBtn">Yes 💘</button>
+    <button id="noBtn">No 😶</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <h1>Open your book 💌</h1>
+
+  <div class="book" id="book">
+    <div class="book-inner">
+
+      <div class="cover">Tap to Open</div>
+
+      <div class="pages">
+        <h2>My Sweet little baby,</h2>
+
+        <p>
+          Happy Valentine's day, ik im quite late but i was trying to make this thing. this is the first time i tried something like this so it took me sometime so yeah ahem. Sorryyyyyy~ I wanted to say how much i love youuu. Thank you for everything till now. U were the best thing that ever happened to me. People say how they fall for their lovers everytime but i think i fell for u three times. Uk why three times? Because there were three stages of love(for me atleast). First was when we started talking, the way u talked the way u expressed urself, i was stunned. That time i got attracted by u, by ur words. The second time was affection. When we started dating the care and affection u gave me felt smtg more than just attraction. i felt very affectionate about u i wanted to know more about u(i still want to know more about you). And last is love, we started getting closer slowly, we hugged, we kissed, we laughed, we enjoyed our time, we got more closer(and get to know we are freaky) but thats how i fell in love with you. Just u being u was enough for me to fall completely. So yuppp im ever grateful for u to choose me and loving me. ill make sure to take care of u and me also.      
+        </p>
+
+        <!-- Replace with your photo -->
+        <img src="us.jpeg" class="letter-photo">
+
+        <p>
+          Usss btwww yayyyyy!!!
+	  I just hope we keep loving each other!! Not wanting to make things long and make ur eyes go sore, ill end it here. I love you!!! Thank u so muchh.
+        </p>
+
+        <p>
+          Happy Valentine’s Day ❤️
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="small-note">(Click book to open — scroll to read)</div>
+</div>
+
+<script>
+let noClicks = 0;
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const btnContainer = document.getElementById("btnContainer");
+const music = document.getElementById("bgMusic");
+
+const messages = [
+  "Are you sure?",
+  "Sachii??",
+  "Lwww na garana yestoooo",
+  "Ruidinxu aeile😭",
+  "Kassam last chance hai",
+  "Noooo click yess pleaseeee",
+  "lwww"
+];
+
+noBtn.onclick = () => {
+  noClicks++;
+
+  if (noClicks < messages.length) {
+    noBtn.textContent = messages[noClicks - 1];
+
+    const scale = 1 + noClicks * 0.15;
+    yesBtn.style.transform = `scale(${Math.min(scale, 2.2)})`;
+
+  } else {
+    noBtn.remove();
+    yesBtn.style.transform = "scale(2.3)";
+    btnContainer.style.justifyContent = "center";
+  }
+};
+
+yesBtn.onclick = () => {
+  document.getElementById("page1").classList.remove("active");
+  document.getElementById("page2").classList.add("active");
+  music.play().catch(() => {});
+};
+
+const book = document.getElementById("book");
+book.onclick = () => book.classList.toggle("open");
+</script>
+
+</body>
+</html>
