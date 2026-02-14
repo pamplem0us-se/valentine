@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", cursive;
+  background: #ffeef5;
+  overflow-x: hidden;
+}
+
+/* PAGE SWITCH */
+.page {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active {
+  display: flex;
+}
+
+/* PAGE 1 */
+
+.gif {
+  width: 250px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #ff4f8b;
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background: #ff7eb3;
+  color: white;
+  z-index: 2;
+}
+
+#noBtn {
+  background: #d3d3d3;
+  position: absolute;
+  right: 10px;
+}
+
+/* PAGE 2 BOOK */
+
+.book {
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+.book h2 {
+  text-align: center;
+  color: #ff4f8b;
+}
+
+.book p {
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+.photo-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.photo-section img {
+  width: 80%;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <img class="gif" src="https://media1.tenor.com/m/7VT-jcFlwukAAAAd/ranpo-edogawa.gif">
+  <h1>Will you be my Valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="goToPage2()">Yes 💖</button>
+    <button id="noBtn" onclick="noClick()">No</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <div class="book">
+    <h2>My Love Letter</h2>
+
+    <p>
+      Write your message here…<br><br>
+      This is your scrolling book. You can type a lot.
+      Talk about memories, feelings, promises, anything.
+    </p>
+
+    <div class="photo-section">
+      <img src="us.jpeg" alt="Our photo">
+    </div>
+
+    <p>
+      Continue writing after the photo…<br><br>
+      Add as much as you want.
+      The book scrolls forever 💕
+    </p>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="music.webm" type="audio/webm">
+</audio>
+
+<script>
+let noCount = 0;
+
+function noClick() {
+  noCount++;
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+
+  yesBtn.style.transform = `scale(${1 + noCount * 0.3})`;
+  noBtn.style.transform = `scale(${1 - noCount * 0.1})`;
+
+  noBtn.innerText = [
+    "No 😢",
+    "Are you sure?",
+    "Really sure?",
+    "Think again 💔",
+    "Last chance 😭",
+    "Don't do this",
+    "Fine…"
+  ][Math.min(noCount - 1, 6)];
+
+  if (noCount >= 7) {
+    noBtn.style.display = "none";
+    yesBtn.style.position = "absolute";
+    yesBtn.style.left = "50%";
+    yesBtn.style.top = "50%";
+    yesBtn.style.transform = "translate(-50%, -50%) scale(3)";
+  }
+}
+
+function goToPage2() {
+  document.getElementById("page1").classList.remove("active");
+  document.getElementById("page2").classList.add("active");
+  document.getElementById("bgMusic").play();
+}
+</script>
+
+</body>
+</html>
